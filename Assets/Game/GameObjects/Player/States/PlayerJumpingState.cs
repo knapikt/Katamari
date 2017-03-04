@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerJumpingState : PlayerState {
 
-  private float jumpForce = 750.0f;
+  private float jumpForce = 500.0f;
 
   public PlayerJumpingState(PlayerController controller) : base(controller) {
     stateName = "Jumping";

@@ -11,7 +11,10 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   public PlayerGroundState  GroundState  { get; private set; }
   public PlayerJumpingState JumpingState { get; private set; }
 
-  public void Start() {
+  // Settings
+  public float PreferredMaxSpeed { get; private set; }
+
+  private void Start() {
     // Hook up components
     rigidBody = gameObject.GetComponent<Rigidbody>();
 
@@ -19,7 +22,18 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     GroundState  = new PlayerGroundState(this);
     JumpingState = new PlayerJumpingState(this);
 
-    this.State = GroundState;
+    // Initialize settings
+    State = GroundState;
+    PreferredMaxSpeed = 25.0f;
+  }
+
+  protected override void FixedUpdate() {
+    base.FixedUpdate();
+
+    // Cap the speed of the object
+    if (Speed > PreferredMaxSpeed) {
+      Speed = PreferredMaxSpeed;
+    }
   }
 
   private void OnCollisionEnter(Collision collision) {
@@ -34,4 +48,15 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     this.State.Jump();
   }
     
+  // Properties ----------------------------------------------------------------------
+  public float Speed { 
+    get { return rigidBody.velocity.magnitude; } 
+    set {
+      Vector3 v = rigidBody.velocity;
+      v.Normalize();
+      v *= value;
+      rigidBody.velocity = v;
+    }
+  }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tag {
-  public const string Ground = "Ground";
+public class GroundController : MonoBehaviour {
+
+	
 }
