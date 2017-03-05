@@ -4,9 +4,7 @@ using UnityEngine;
 
 
 public class PlayerBuilder : MonoBehaviour {
-
-  public float angularDrag = 0;
-
+  
   private void Awake() {
     gameObject.tag = Tag.Player;
 
@@ -14,8 +12,9 @@ public class PlayerBuilder : MonoBehaviour {
     gameObject.AddComponent<PlayerInput>();
 
     Rigidbody rigidBody = gameObject.AddComponent<Rigidbody>();
-    rigidBody.angularDrag = angularDrag;
-
+    rigidBody.angularDrag        = 0;
+    rigidBody.maxAngularVelocity = 10;
+   
     SphereCollider collider = gameObject.AddComponent<SphereCollider>();
     collider.material = (UnityEngine.PhysicMaterial)Resources.Load(PhysicsMaterials.Ground);
   }

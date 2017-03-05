@@ -12,5 +12,10 @@ public class PlayerState : ComponentState<PlayerController> {
   public virtual void Move(Vector3 direction) { }
   public virtual void Jump()                  { }
 
-  public virtual void OnCollision(Collision collision) { }
+  public virtual void OnGroundCollision(Collision collision, GroundController groundController) { }
+
+  public virtual void OnAttachableCollision(Collision collision, AttachableController attachableController) { 
+    controller.Attach(attachableController);
+    attachableController.Attach(controller);
+  }
 }

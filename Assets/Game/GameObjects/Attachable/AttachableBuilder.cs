@@ -11,5 +11,6 @@ public class AttachableBuilder : MonoBehaviour {
     collider.material = (UnityEngine.PhysicMaterial)Resources.Load(PhysicsMaterials.Ground);
 
     gameObject.AddComponent<Rigidbody>();
+    gameObject.AddComponent<AttachableController>();
   }
 }

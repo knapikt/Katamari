@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlayerGroundState : PlayerState {
   
   // Settings
-  private float moveMultiplier = 100.0f;
+  private float moveMultiplier = 10.0f;
 
   public PlayerGroundState(PlayerController controller) : base(controller) {
     stateName = "Grounded";
   }
 
   public override void Move(Vector3 direction) {
-    controller.rigidBody.AddForce(moveMultiplier * direction);
+   // controller.rigidBody.AddForce(moveMultiplier * direction);
+    controller.rigidBody.AddTorque(moveMultiplier * direction, ForceMode.VelocityChange);
+
   }
 
   public override void Jump() {

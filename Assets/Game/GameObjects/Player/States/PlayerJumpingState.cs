@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class PlayerJumpingState : PlayerState {
 
-  private float jumpForce = 500.0f;
+  private float jumpVelocity = 10.0f;
 
   public PlayerJumpingState(PlayerController controller) : base(controller) {
     stateName = "Jumping";
   }
 
   public override void Enter() {
-    this.controller.rigidBody.AddForce(jumpForce * Vector3.up);
+    Vector3 v = controller.rigidBody.velocity;
+    v.y = jumpVelocity;
+    controller.rigidBody.velocity = v;
   }
 
-  public override void OnCollision(Collision collision) {
-    if (collision.gameObject.CompareTag(Tag.Ground)) {
-      this.controller.State = this.controller.GroundState;
-    }
+  public override void OnGroundCollision(Collision collision, GroundController groundController) {
+    controller.State = controller.GroundState;
   }
 
 }

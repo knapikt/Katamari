@@ -34,7 +34,7 @@ public abstract class StateControlledMonoBehavior<BaseState, Controller> : SafeM
 	public delegate void Exit();
 	public delegate void Enter();
 	public event Enter OnEnter = delegate {};
-	public event Exit OnExit   = delegate {};
+	public event Exit  OnExit  = delegate {};
 
 	public BaseState State {
 		get { return _state; }
