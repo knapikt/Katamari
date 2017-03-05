@@ -17,6 +17,11 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   // Settings
   public float PreferredMaxSpeed { get; private set; }
 
+  // Delegates
+  public delegate void FloatFloat(float v1, float v2);
+
+  public event FloatFloat OnMassChanged = delegate {};
+
   private void Start() {
     // Hook up components
     rigidBody = gameObject.GetComponent<Rigidbody>();
@@ -85,9 +90,11 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
 
   public float Mass {
     get { return rigidBody.mass;  }
-    set { 
+    set {
+      float initialValue = Mass;
       rigidBody.mass = value; 
       transform.localScale = Vector3.one * 2 * Mathf.Pow(Mass * 0.75f * Mathf.PI, 0.33333f);
+      OnMassChanged(initialValue, Mass);
     }
   }
 
