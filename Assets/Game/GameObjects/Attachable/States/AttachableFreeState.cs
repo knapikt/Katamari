@@ -8,7 +8,7 @@ public class AttachableFreeState : AttachableState {
     stateName = "Free";
   }
 
-  public override void Attach(PlayerController playerController) { 
+  public override void Attach(PlayerController playerController) {
     controller.gameObject.transform.parent = playerController.gameObject.transform;
     controller.State = controller.AttachedState;
   }

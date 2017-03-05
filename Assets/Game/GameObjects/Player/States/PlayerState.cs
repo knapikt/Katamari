@@ -14,8 +14,12 @@ public class PlayerState : ComponentState<PlayerController> {
 
   public virtual void OnGroundCollision(Collision collision, GroundController groundController) { }
 
-  public virtual void OnAttachableCollision(Collision collision, AttachableController attachableController) { 
-    controller.Attach(attachableController);
+  public virtual void OnAttachableCollision(Collision collision, AttachableController attachableController) {
     attachableController.Attach(controller);
+  }
+
+  public virtual void OnDestructableCollision(Collision collision, DestructableController destructableController) {
+    destructableController.Collide(collision, controller);
+    controller.ExplodeAttached();
   }
 }

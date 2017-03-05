@@ -9,4 +9,6 @@ public class AttachableState : ComponentState<AttachableController> {
   }
 
   public virtual void Attach(PlayerController playerController) { }
+  public virtual void Detach(PlayerController playerController) { }
+
 }

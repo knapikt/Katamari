@@ -8,10 +8,14 @@ public class AttachableAttachedState : AttachableState {
     stateName = "Attached";
   }
 
+  public override void Detach(PlayerController playerController) {
+    controller.gameObject.transform.parent = controller.DefaultParentGameObject.transform;
+    controller.State = controller.FreeState;
+  }
+
   public override void Enter() {
     base.Enter();
     controller.rigidBody.isKinematic = true;
     controller.rigidBody.detectCollisions = false;
   }
-
 }

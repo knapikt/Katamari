@@ -27,15 +27,22 @@ public class HudController : MonoBehaviour {
     healthFillBarController.SetPercentFilled(playerController.HealthPercent);
 
     // Register for events
-    playerController.OnMassChanged += OnMassChanged;
+    playerController.OnMassChanged          += OnMassChanged;
+    playerController.OnHealthPercentChanged += OnHealthPercentChanged;
   }
 
   private void OnDestroy() {
     // Unregister for events
     playerController.OnMassChanged -= OnMassChanged;
+    playerController.OnHealthPercentChanged -= OnHealthPercentChanged;
   }
     
   public void OnMassChanged(float initialMass, float mass) {
     massText.LerpToTargetValue((int)initialMass, (int)mass);
+  }
+
+  public void OnHealthPercentChanged(float initialHealth, float health) {
+    Debug.Log(string.Format("Changed: {0}", health));
+    healthFillBarController.SetPercentFilled(health);
   }
 }

@@ -10,12 +10,27 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
 
   public Rigidbody rigidBody { get; private set; }
 
+  public GameObject DefaultParentGameObject { get; private set; }
+
+  private float lastDetachTime = 0;
+  private float attachCooldown = 2.0f;
+
+  private void Awake() {
+    gameObject.tag = Tag.Attachable;
+
+    // Locate a parent object for when the Attachable is not attached
+    DefaultParentGameObject = GameObject.FindGameObjectWithTag(Tag.Interactive);
+    Assert.IsNotNull(DefaultParentGameObject, "Failed to locate a gameobject with tag interactive");
+
+    // Attach a collider, set the material to something sticky
+    BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+    collider.material = (UnityEngine.PhysicMaterial)Resources.Load(PhysicsMaterials.Ground);
+
+    // Attach a rigidbody
+    rigidBody = gameObject.AddComponent<Rigidbody>();
+  }
+
   private void Start() {
-    // Locate components
-    rigidBody = gameObject.GetComponent<Rigidbody>();
-    Assert.IsNotNull(rigidBody);
-
-
     // Initialize states
     AttachedState = new AttachableAttachedState(this);
     FreeState     = new AttachableFreeState(this);
@@ -25,7 +40,16 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
   }
 
   public void Attach(PlayerController playerController) {
-    State.Attach(playerController);
+    // Do not allow quickly occuring attachments
+    if (lastDetachTime + attachCooldown < Time.time) { 
+      playerController.Attach(this);
+      State.Attach(playerController);
+    }
+  }
+
+  public void Detach(PlayerController playerController) {
+    State.Detach(playerController);
+    lastDetachTime = Time.time;
   }
 
   public float Mass { 
