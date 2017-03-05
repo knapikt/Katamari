@@ -88,6 +88,12 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     }
   }
 
+  public float HealthPercent {
+    get {
+      return 1f;
+    }
+  }
+
   public float Mass {
     get { return rigidBody.mass;  }
     set {

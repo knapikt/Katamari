@@ -7,6 +7,7 @@ using TMPro;
 public class HudController : MonoBehaviour {
 
   public TextMeshProUGUI massText;
+  public FillBarController healthFillBarController;
 
   private PlayerController playerController;
 
@@ -20,6 +21,10 @@ public class HudController : MonoBehaviour {
 
     // Initialize the mass
     OnMassChanged(0, 0);
+
+    // Animate initial health
+    healthFillBarController.SetPercentFilled(0, false);
+    healthFillBarController.SetPercentFilled(playerController.HealthPercent);
 
     // Register for events
     playerController.OnMassChanged += OnMassChanged;
