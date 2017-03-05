@@ -12,8 +12,10 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
 
   public GameObject DefaultParentGameObject { get; private set; }
 
-  private float lastDetachTime = 0;
+  private GameSounds gameSounds;
+  private float lastDetachTime = float.MinValue;
   private float attachCooldown = 2.0f;
+  private Vector3 initialScale;
 
   private void Awake() {
     gameObject.tag = Tag.Attachable;
@@ -28,9 +30,15 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
 
     // Attach a rigidbody
     rigidBody = gameObject.AddComponent<Rigidbody>();
+
+    // Track initial scale so that it can be set back properly on detach
+    initialScale = transform.localScale;
   }
 
   private void Start() {
+    // Locate other components
+    gameSounds = FindObjectOfType<GameSounds>();
+
     // Initialize states
     AttachedState = new AttachableAttachedState(this);
     FreeState     = new AttachableFreeState(this);
@@ -41,22 +49,24 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
 
   public void Attach(PlayerController playerController) {
     // Do not allow quickly occuring attachments
-    if (lastDetachTime + attachCooldown < Time.time) { 
+    if (lastDetachTime + attachCooldown < Time.time) {
       playerController.Attach(this);
       State.Attach(playerController);
+      SoundController.Instance.PlayRandomSound(gameSounds.attaches);
     }
   }
 
   public void Detach(PlayerController playerController) {
     State.Detach(playerController);
     lastDetachTime = Time.time;
+    transform.localScale = initialScale;
+    SoundController.Instance.PlayRandomSound(gameSounds.detaches);
   }
-
+    
   public float Mass { 
     get {
       Vector3 scale = transform.localScale;
       return scale.x * scale.y * scale.z;
     }
   }
-
 }

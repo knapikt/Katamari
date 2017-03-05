@@ -16,6 +16,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
 
   // Private variables
   private float _health;
+  private float explodeDetachVelocity = 50;
 
   // Settings
   public float PreferredMaxSpeed { get; private set; }
@@ -93,7 +94,6 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   public void ExplodeAttached() {
     int initialAttachCount = AttachCount;
     int toRemoveCount = (int)(0.5f * initialAttachCount);
-    int count = 0;
 
     // Copy attachables to an array. This avoids errors when looping over a list that is changing in size
     AttachableController[] attachableList = new AttachableController[initialAttachCount]; 
@@ -101,21 +101,22 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
 
     // Remove objects from the Player
     foreach (AttachableController attachableController in attachableList) {
-      if (count >= toRemoveCount) { 
+      if (toRemoveCount <= 0) { 
         break;
       }
+
+      toRemoveCount--;
 
       // Detach the object from the Player and explode the object
       attachableController.Detach(this);
       Detach(attachableController);
-      attachableController.rigidBody.AddExplosionForce(100, attachableController.transform.localPosition, 3f);
+      attachableController.rigidBody.AddExplosionForce(explodeDetachVelocity, attachableController.transform.localPosition, 3f, 3f, ForceMode.VelocityChange);
     }
   }
 
   public void Detach(AttachableController attachableController) {
     if (attached.Contains(attachableController)) {
       attached.Remove(attachableController);
-      Debug.Log(string.Format("Removing mass: {0}", attachableController.Mass));
       Mass -= attachableController.Mass;
     }
   }
@@ -123,7 +124,6 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   public void Attach(AttachableController attachableController) {
     if (!attached.Contains(attachableController)) {
       attached.Add(attachableController);
-      Debug.Log(string.Format("Adding mass: {0}", attachableController.Mass));
       Mass += attachableController.Mass;
     }
   }
@@ -172,5 +172,4 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
       OnMassChanged(initialValue, Mass);
     }
   }
-
 }

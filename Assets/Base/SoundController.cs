@@ -25,15 +25,23 @@ public class SoundController : MonoBehaviorSingleton<SoundController> {
 	}
 
   public void PlaySound(string sound, float volumeScale = 1f) {
-    PlayAudioClipImmediately(Clip(sound), volumeScale);
+    PlayAudioClip(Clip(sound), volumeScale);
   }
  
-	private void PlayAudioClipImmediately(AudioClip audioClip, float volumeScale = 1f) {
+	public void PlayAudioClip(AudioClip audioClip, float volumeScale = 1f) {
 		if (audioClip == null) {
 			return;
 		}
 		soundSource.PlayOneShot(audioClip, volumeScale);
 	}
+
+  public void PlayRandomSound(AudioClip[] clips) {
+    if (clips == null || clips.Length == 0) {
+      return;
+    }
+
+    PlayAudioClip(clips.RandomElement<AudioClip>());
+  }
 
 	public void PlayMusic(string sound, float volumeScale = 1f) {
 		PlayMusicAudioClip(Clip(sound), volumeScale);

@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-  
-	void Start() {
+
+
+  private GameSounds gameSounds;
+
+	private void Start() {
+    gameSounds = FindObjectOfType<GameSounds>();
+
+
     Physics.gravity = new Vector3(0, -40.0F, 0);
+    SoundController.Instance.PlayMusicAudioClip(gameSounds.musicMain);
 	}
 	
 }
