@@ -13,6 +13,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   // States
   public PlayerGroundState  GroundState  { get; private set; }
   public PlayerJumpingState JumpingState { get; private set; }
+  public PlayerIdleState    IdleState    { get; private set; }
 
   // Private variables
   private float _health;
@@ -23,33 +24,40 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
 
   // Delegates
   public delegate void FloatFloat(float v1, float v2);
+  public delegate void Int(int number);
 
-  public event FloatFloat OnMassChanged = delegate {};
+  // Events that are called on PlayerController state changes
+  public event Int        OnAttachedCountChanged = delegate {};
+  public event FloatFloat OnMassChanged          = delegate {};
   public event FloatFloat OnHealthPercentChanged = delegate {};
 
   private void Awake() {
     gameObject.tag = Tag.Player;
 
+    // Hookup to Keyboard input
     gameObject.AddComponent<PlayerInput>();
 
+    // Adding for simple physics
     rigidBody = gameObject.AddComponent<Rigidbody>();
-    rigidBody.angularDrag        = 0;
+    rigidBody.angularDrag        = 10;
     rigidBody.maxAngularVelocity = 10;
 
+    // Adding collider with high friction
     SphereCollider collider = gameObject.AddComponent<SphereCollider>();
-    collider.material = (UnityEngine.PhysicMaterial)Resources.Load(PhysicsMaterials.Ground);
+    collider.material = (UnityEngine.PhysicMaterial)Resources.Load(ResourceConstant.Ground);
   }
 
   private void Start() {
     // Instantiate states
     GroundState  = new PlayerGroundState(this);
     JumpingState = new PlayerJumpingState(this);
+    IdleState    = new PlayerIdleState(this);
 
     // Initialize settings
-    State = GroundState;
-    PreferredMaxSpeed = 25.0f;
-    Health = HealthMax;
-    Mass = 1;
+    State             = GroundState;
+    PreferredMaxSpeed = 25.0f;     // Make sure we don't move too fast
+    Health            = HealthMax; // Full health
+    Mass              = 1;
   }
 
   protected override void FixedUpdate() {
@@ -61,6 +69,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     }
   }
 
+  // Feed collision events to the PlayerState to handle
   private void OnCollisionEnter(Collision collision) {
     switch(collision.gameObject.tag) {
     case Tag.Ground:
@@ -91,9 +100,10 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     State.Jump();
   }
 
-  public void ExplodeAttached() {
+  // Remove a fraction of Attachables. Add a force so they are blown away
+  public void ExplodeAttached(float fractionToExplode = 0.5f) {
     int initialAttachCount = AttachCount;
-    int toRemoveCount = (int)(0.5f * initialAttachCount);
+    int toRemoveCount = (int)(fractionToExplode * initialAttachCount);
 
     // Copy attachables to an array. This avoids errors when looping over a list that is changing in size
     AttachableController[] attachableList = new AttachableController[initialAttachCount]; 
@@ -118,6 +128,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     if (attached.Contains(attachableController)) {
       attached.Remove(attachableController);
       Mass -= attachableController.Mass;
+      OnAttachedCountChanged(AttachCount);
     }
   }
     
@@ -125,6 +136,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
     if (!attached.Contains(attachableController)) {
       attached.Add(attachableController);
       Mass += attachableController.Mass;
+      OnAttachedCountChanged(AttachCount);
     }
   }
 
@@ -166,6 +178,8 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
   public float Mass {
     get { return rigidBody.mass;  }
     set {
+      value = Mathf.Max(1, value);
+
       float initialValue = Mass;
       rigidBody.mass = value; 
       transform.localScale = Vector3.one * 2 * Mathf.Pow(Mass * 0.75f * Mathf.PI, 0.33333f);

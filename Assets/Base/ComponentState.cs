@@ -40,7 +40,7 @@ public abstract class StateControlledMonoBehavior<BaseState, Controller> : SafeM
 		get { return _state; }
 		
 		set {
-			if (_state != null) {
+      if (_state != null) {
 				_state.Exit();
 				OnExit();
 			}

@@ -43,15 +43,7 @@ public class SoundController : MonoBehaviorSingleton<SoundController> {
     PlayAudioClip(clips.RandomElement<AudioClip>());
   }
 
-	public void PlayMusic(string sound, float volumeScale = 1f) {
-		PlayMusicAudioClip(Clip(sound), volumeScale);
-	}
-	
-	public void PlayMusicAudioClip(AudioClip audioClip, float volumeScale = 1f) { 
-		PlayMusicAudioClip(audioClip, true, volumeScale);
-	}
-
-	private void PlayMusicAudioClip(AudioClip audioClip, bool looping, float volumeScale = 1f) {
+	public void PlayMusicAudioClip(AudioClip audioClip, bool looping = true, float volumeScale = 1f) {
 		if (audioClip == null) {
 			return;
 		}

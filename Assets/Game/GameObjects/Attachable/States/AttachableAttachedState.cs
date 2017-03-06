@@ -9,7 +9,6 @@ public class AttachableAttachedState : AttachableState {
   }
 
   public override void Detach(PlayerController playerController) {
-    controller.gameObject.transform.parent = controller.DefaultParentGameObject.transform;
     controller.State = controller.FreeState;
   }
 
@@ -17,5 +16,9 @@ public class AttachableAttachedState : AttachableState {
     base.Enter();
     controller.rigidBody.isKinematic = true;
     controller.rigidBody.detectCollisions = false;
+  }
+
+  public override void Exit() {
+    controller.gameObject.transform.parent = controller.DefaultParentGameObject.transform;
   }
 }

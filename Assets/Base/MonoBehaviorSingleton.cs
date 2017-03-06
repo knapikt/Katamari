@@ -40,17 +40,17 @@ public class MonoBehaviorSingleton<T> : SafeMonoBehaviour where T : Component {
 
 	private void OnApplicationFocus(bool focusStatus) {
 		if (Instance != this) {
-			Destroy(gameObject);
+      Destroy(gameObject);
 		}
 	}
 
 	private void OnApplicationQuit() {
 		GameObject[] parentGameObjects = GameObject.FindGameObjectsWithTag(singletonsParentName);
 		foreach (GameObject parentGameObject in parentGameObjects) {
-			Destroy(parentGameObject);
+      Destroy(parentGameObject);
 		}
 	
-		Destroy(gameObject);
+    Destroy(gameObject);
 	}
 
 	private static GameObject _parentGameObject;

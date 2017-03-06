@@ -26,7 +26,7 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
 
     // Attach a collider, set the material to something sticky
     BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-    collider.material = (UnityEngine.PhysicMaterial)Resources.Load(PhysicsMaterials.Ground);
+    collider.material = (UnityEngine.PhysicMaterial)Resources.Load(ResourceConstant.Ground);
 
     // Attach a rigidbody
     rigidBody = gameObject.AddComponent<Rigidbody>();
@@ -60,7 +60,6 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
     State.Detach(playerController);
     lastDetachTime = Time.time;
     transform.localScale = initialScale;
-    SoundController.Instance.PlayRandomSound(gameSounds.detaches);
   }
     
   public float Mass { 

@@ -14,8 +14,7 @@ public class PlayerInput : MonoBehaviour {
     Assert.IsNotNull(playerController, "Failed to locate a controller");
   }
 
-	public void FixedUpdate() {
-
+	public void Update() {
     // Attempt to jump first
     if (Input.GetKeyDown(KeyCode.Space)) {
       playerController.Jump();

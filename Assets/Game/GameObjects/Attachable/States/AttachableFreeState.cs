@@ -18,6 +18,7 @@ public class AttachableFreeState : AttachableState {
     base.Enter();
     controller.rigidBody.isKinematic = false;
     controller.rigidBody.detectCollisions = true;
+    controller.gameObject.transform.parent = controller.DefaultParentGameObject.transform;
   }
 
 }
