@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// A simple camera that follows a target, but does not rotate
+// The camera should pull away as the target gains speed giving more view space
+
 public class CameraFollowTarget : MonoBehaviour {
 
   // The game object to follow

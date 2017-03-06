@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// A dialog showing that the game is over
+
 public class GameOverDialogController : DialogController {
 
   public TextMeshProUGUI outcomeText;

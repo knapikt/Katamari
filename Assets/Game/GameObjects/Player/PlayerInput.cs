@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// A script that is attached to the PlayerController that forwards input information to the PlayerController
+
 public class PlayerInput : MonoBehaviour {
 
+  // Reference to the player
   private PlayerController playerController;
+
+  // A resused vector for determining which way to rotate the player
   private Vector3 direction = Vector3.zero;
 
   public void Awake() {

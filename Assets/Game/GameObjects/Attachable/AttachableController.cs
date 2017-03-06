@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// A class for attaching to the player
+
 public class AttachableController : StateControlledMonoBehavior<AttachableState, AttachableController> {
   
   public AttachableAttachedState AttachedState { get; private set; }
@@ -13,8 +15,12 @@ public class AttachableController : StateControlledMonoBehavior<AttachableState,
   public GameObject DefaultParentGameObject { get; private set; }
 
   private GameSounds gameSounds;
+
+  // Variables to ensure an attach doesn't happen as the object detaches
   private float lastDetachTime = float.MinValue;
   private float attachCooldown = 2.0f;
+
+  // Having trouble keeping scale when detaching from an object. This helps set the scale back to the initial value
   private Vector3 initialScale;
 
   private void Awake() {

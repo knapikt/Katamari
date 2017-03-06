@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Runs when the player has died or won the game
+
 public class GameOverState : GameState {
 
   public GameOverState(GameController controller) : base(controller) {

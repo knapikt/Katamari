@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Place all tag names here
+
 public class Tag {
   public const string Attachable    = "Attachable";
   public const string Destructable  = "Destructable";

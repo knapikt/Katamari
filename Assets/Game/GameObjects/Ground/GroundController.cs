@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// A simple class representing the ground. Mainly for setting the material of the ground and having an object
+// the player understands is the ground via the Tag
+
 public class GroundController : MonoBehaviour {
 
   private void Awake() {

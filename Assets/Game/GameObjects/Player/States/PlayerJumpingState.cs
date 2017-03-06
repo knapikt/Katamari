@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// While in a jumping state the player cannot use input. Resets back to ground upon a collision with the ground
+
 public class PlayerJumpingState : PlayerState {
 
   private float jumpVelocity = 100.0f;

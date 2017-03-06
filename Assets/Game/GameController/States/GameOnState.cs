@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameOnState : GameState {
 
+  // Runs while the game is not over
+
   public GameOnState(GameController controller) : base(controller) {
     stateName = "GameOnState";
   }

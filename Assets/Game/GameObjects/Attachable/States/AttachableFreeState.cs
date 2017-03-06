@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Objects in this state are 'free' and not attached to the player
+
 public class AttachableFreeState : AttachableState {
 
   public AttachableFreeState(AttachableController controller) : base(controller) {

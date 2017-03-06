@@ -4,10 +4,14 @@ using System.Collections;
 
 namespace TMPro {
 
+  // A simple extension that allows you to have a counting up effect on text
+
   public partial class TextMeshProUGUI {
 
+    // The text to be displayed with a number
     public string formatText;
 
+    // How long to count up
     private float lerpDuration = 1f;
 
     public void LerpToTargetValue(int startValue, int targetValue, string format = "{0}") {

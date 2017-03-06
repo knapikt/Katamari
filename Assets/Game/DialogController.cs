@@ -7,6 +7,7 @@ public class DialogController : MonoBehaviour {
 
   private static GameObject _overlayCanvas;
 
+  // A game object to parent dialogs to
   private static GameObject OverlayCanvas {
     get {
       if (_overlayCanvas == null) {
@@ -25,6 +26,7 @@ public class DialogController : MonoBehaviour {
     ObjectPoolController.Instance.PutBack(gameObject);
   }
 
+  // A helper function for instantiating and locating DialogControllers
   public static T Retrieve<T>() where T : DialogController {
     string controllerName = typeof(T).Name;
     Assert.IsTrue(controllerName.EndsWith("Controller"));

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// A class for handling objects that can be destroyed and harm the player
+// For now not implementing state as this is a simple class
+
 public class DestructableController : MonoBehaviour {
 
   // Prefab parameters

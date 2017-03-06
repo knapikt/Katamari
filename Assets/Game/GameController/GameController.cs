@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This class controls the lifecyle of the game
+
 public class GameController : StateControlledMonoBehavior<GameState, GameController> {
 
   public int attachableCount   = 300;
@@ -44,6 +46,7 @@ public class GameController : StateControlledMonoBehavior<GameState, GameControl
 	}
 
   private void GenerateObstacles() {
+    // Create randomly sized and located attachables
     for (int i = 0; i < attachableCount; ++i) {
       Vector3 randomPosition = Vector3.zero;
       Vector2 location = Random.insideUnitCircle * spanRadius;
@@ -57,6 +60,7 @@ public class GameController : StateControlledMonoBehavior<GameState, GameControl
       attachableObject.transform.localScale = new Vector3(size, size, size);
     }
 
+    // Create randomly sized and located destructables
     for (int i = 0; i < destructableCount; ++i) {
       Vector3 randomPosition = Vector3.zero;
       Vector2 location = Random.insideUnitCircle * spanRadius;

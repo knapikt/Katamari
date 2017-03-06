@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// A state for attachables
+
 public class AttachableState : ComponentState<AttachableController> {
 
   public AttachableState(AttachableController controller) : base(controller) {

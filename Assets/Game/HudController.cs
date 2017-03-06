@@ -6,10 +6,11 @@ using TMPro;
 
 public class HudController : MonoBehaviour {
 
-  public TextMeshProUGUI quotaText;
-  public TextMeshProUGUI massText;
-  public FillBarController healthFillBarController;
+  public TextMeshProUGUI quotaText;                 // How many collectables you need to collect
+  public TextMeshProUGUI massText;                  // The player's mass
+  public FillBarController healthFillBarController; // The player's healthbar
 
+  // References to the game objects. Used to display proper values
   private PlayerController playerController;
   private GameController   gameController;
 

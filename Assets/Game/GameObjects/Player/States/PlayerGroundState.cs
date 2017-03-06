@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// The player may move when grounded. It can also jump
+
 public class PlayerGroundState : PlayerState {
   
   // Settings

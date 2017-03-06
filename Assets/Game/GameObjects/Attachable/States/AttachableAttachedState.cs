@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AttachableAttachedState : AttachableState {
 
+  // Objects in this state are attached to the player
+
   public AttachableAttachedState(AttachableController controller) : base(controller) {
     stateName = "Attached";
   }
