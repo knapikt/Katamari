@@ -55,7 +55,7 @@ public class PlayerController : StateControlledMonoBehavior<PlayerState, PlayerC
 
     // Initialize settings
     State             = GroundState;
-    PreferredMaxSpeed = 25.0f;     // Make sure we don't move too fast
+    PreferredMaxSpeed = 50.0f;     // Make sure we don't move too fast
     Health            = HealthMax; // Full health
     Mass              = 1;
   }

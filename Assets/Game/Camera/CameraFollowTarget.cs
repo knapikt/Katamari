@@ -35,7 +35,7 @@ public class CameraFollowTarget : MonoBehaviour {
   }
 
   // How far above the target we should be
-  private float OffsetY { get { return 10; } }
+  private float OffsetY { get { return 20; } }
 
   // How far behind the target we should be. Adjusts as a function of speed of target
   private float OffsetZ { get { return -30 - targetRB.velocity.magnitude; } }
